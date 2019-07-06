@@ -1,0 +1,44 @@
+#### Create BAR
+
+POST localhost:8080/layout/bar
+Content-Type: application/json
+
+{
+  "descrizione": "Description",
+  "filiale": "1",
+  "id": "K-999",
+  "numero": 999,
+  "sigla": "SIG",
+  "societa": "K",
+  "zona": 999
+}
+
+#### Create or Update BarLayout
+
+POST localhost:8080/layout
+Content-Type: application/json
+
+{
+    "bar": {
+      "descrizione": "Description",
+      "filiale": "1",
+      "id": "K-999",
+      "numero": 999,
+      "sigla": "SIG",
+      "societa": "K",
+      "zona": 999
+    },
+    "flusso": "FRONT",
+    "hasApp": false,
+    "hasMonitorVassoio": false,
+    "hasPdaBevande": false,
+    "maxComandeVassoio": 8,
+    "orarioAperturaBar": "09:00",
+    "orarioAperturaCucina": "11:30",
+    "orarioChiusuraCucina": "15:00",
+    "tolleranza": 24,
+    "version": 1
+}
+
+###
+
