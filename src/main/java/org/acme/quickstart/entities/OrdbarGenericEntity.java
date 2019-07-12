@@ -29,24 +29,10 @@ public abstract class OrdbarGenericEntity {
     protected final void onPrePersist() {
         setDataInserimento(new Date());
         setDataAggiornamento(new Date());
-        allineaRelazioni();
-
-        postPrePersist();
     }
-
-    protected void postPrePersist() {}
 
     @PreUpdate
     protected final void onPreUpdate() {
         setDataAggiornamento(new Date());
-        allineaRelazioni();
-
-        postPreUpdate();
     }
-
-    protected void postPreUpdate() {}
-
-
-    public abstract void allineaRelazioni();
-
 }

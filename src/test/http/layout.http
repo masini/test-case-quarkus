@@ -1,5 +1,9 @@
 #### Create BAR
 
+GET localhost:8080/ordini
+
+###
+
 POST localhost:8080/layout/bar
 Content-Type: application/json
 
