@@ -1,12 +1,7 @@
 package org.acme.quickstart.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@Getter
-@Setter
 @Entity
 public class SecondChild extends GenericEntity {
 
@@ -17,4 +12,20 @@ public class SecondChild extends GenericEntity {
 
     @ManyToOne
     FirstChild firstChild;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public FirstChild getFirstChild() {
+        return firstChild;
+    }
+
+    public void setFirstChild(FirstChild firstChild) {
+        this.firstChild = firstChild;
+    }
 }

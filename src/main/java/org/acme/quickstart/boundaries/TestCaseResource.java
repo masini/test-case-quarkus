@@ -35,7 +35,6 @@ public class TestCaseResource {
 
         sc1.setFirstChild(firstChild);
         sc2.setFirstChild(firstChild);
-
         firstChild.getSecondChildren().add(sc2);
         firstChild.getSecondChildren().add(sc1);
 
@@ -43,6 +42,7 @@ public class TestCaseResource {
 
         firstChild.setRootEntity(rootEntity);
         rootEntity.setFirstChildren(Collections.singletonList(firstChild));
+
         rootEntity.setBarcode("barcode");
 
         return em.merge(rootEntity);

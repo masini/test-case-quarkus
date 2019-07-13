@@ -1,9 +1,5 @@
 package org.acme.quickstart.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,9 +7,6 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@EqualsAndHashCode(of = "barcode")
 @Entity
 public class RootEntity extends GenericEntity {
 
@@ -23,6 +16,21 @@ public class RootEntity extends GenericEntity {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rootEntity")
     List<FirstChild> firstChildren = new ArrayList<>();
 
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
+
+    public List<FirstChild> getFirstChildren() {
+        return firstChildren;
+    }
+
+    public void setFirstChildren(List<FirstChild> firstChildren) {
+        this.firstChildren = firstChildren;
+    }
 }
 
 

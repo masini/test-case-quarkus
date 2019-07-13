@@ -1,14 +1,9 @@
 package org.acme.quickstart.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
 public class FirstChild extends GenericEntity {
 
@@ -22,4 +17,28 @@ public class FirstChild extends GenericEntity {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "firstChild", orphanRemoval = true)
     List<SecondChild> secondChildren = new ArrayList<>();
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public RootEntity getRootEntity() {
+        return rootEntity;
+    }
+
+    public void setRootEntity(RootEntity rootEntity) {
+        this.rootEntity = rootEntity;
+    }
+
+    public List<SecondChild> getSecondChildren() {
+        return secondChildren;
+    }
+
+    public void setSecondChildren(List<SecondChild> secondChildren) {
+        this.secondChildren = secondChildren;
+    }
 }
