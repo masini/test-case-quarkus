@@ -1,19 +1,19 @@
 package org.acme.quickstart.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class RootEntity extends GenericEntity {
+public class RootEntity {
 
     @Id
     String barcode;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rootEntity")
+    @Version
+    long version;
+
+    @OneToMany(cascade = CascadeType.ALL)
     List<FirstChild> firstChildren = new ArrayList<>();
 
     public String getBarcode() {
@@ -30,6 +30,14 @@ public class RootEntity extends GenericEntity {
 
     public void setFirstChildren(List<FirstChild> firstChildren) {
         this.firstChildren = firstChildren;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }
 

@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class FirstChild extends GenericEntity {
+public class FirstChild {
 
     @Id
     @GeneratedValue(generator = "FIRST_CHILD_SQ")
     @SequenceGenerator(name = "FIRST_CHILD_SQ")
     Long id;
 
-    @ManyToOne
-    RootEntity rootEntity;
+    @Version
+    long version;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "firstChild", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     List<SecondChild> secondChildren = new ArrayList<>();
 
     public Long getId() {
@@ -26,19 +26,19 @@ public class FirstChild extends GenericEntity {
         this.id = id;
     }
 
-    public RootEntity getRootEntity() {
-        return rootEntity;
-    }
-
-    public void setRootEntity(RootEntity rootEntity) {
-        this.rootEntity = rootEntity;
-    }
-
     public List<SecondChild> getSecondChildren() {
         return secondChildren;
     }
 
     public void setSecondChildren(List<SecondChild> secondChildren) {
         this.secondChildren = secondChildren;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

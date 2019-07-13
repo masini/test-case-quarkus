@@ -3,15 +3,15 @@ package org.acme.quickstart.entities;
 import javax.persistence.*;
 
 @Entity
-public class SecondChild extends GenericEntity {
+public class SecondChild {
 
     @Id
     @GeneratedValue(generator = "SECOND_CHILD_SQ")
     @SequenceGenerator(name = "SECOND_CHILD_SQ")
     Long id;
 
-    @ManyToOne
-    FirstChild firstChild;
+    @Version
+    long version;
 
     public Long getId() {
         return id;
@@ -21,11 +21,11 @@ public class SecondChild extends GenericEntity {
         this.id = id;
     }
 
-    public FirstChild getFirstChild() {
-        return firstChild;
+    public long getVersion() {
+        return version;
     }
 
-    public void setFirstChild(FirstChild firstChild) {
-        this.firstChild = firstChild;
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

@@ -33,14 +33,11 @@ public class TestCaseResource {
 
         FirstChild firstChild = new FirstChild();
 
-        sc1.setFirstChild(firstChild);
-        sc2.setFirstChild(firstChild);
         firstChild.getSecondChildren().add(sc2);
         firstChild.getSecondChildren().add(sc1);
 
         RootEntity rootEntity = new RootEntity();
 
-        firstChild.setRootEntity(rootEntity);
         rootEntity.setFirstChildren(Collections.singletonList(firstChild));
 
         rootEntity.setBarcode("barcode");
