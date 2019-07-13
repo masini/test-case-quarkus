@@ -8,7 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import java.util.Collections;
@@ -46,9 +45,10 @@ public class TestCaseResource {
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public RootEntity mergeIt(@Valid RootEntity entity) {
+    public RootEntity mergeIt(RootEntity entity) {
 
-        return em.merge(entity);
+        RootEntity rootEntity = em.merge(entity);
+        return rootEntity;
     }
 
 }

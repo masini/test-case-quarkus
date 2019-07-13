@@ -11,7 +11,7 @@ public class TestCaseTest {
 
     @Test
     public void testErroreConSaveOrUpdate() {
-        given().get("test").then().statusCode(200);
+        given().get("test").then().statusCode(204);
     }
 
 }
