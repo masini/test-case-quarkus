@@ -13,19 +13,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestCaseTest {
 
     @Test
-    public void testErroreConSaveOrUpdate() {
-        MonitorPostazione monitorPostazione = given().get("test/persist").then().extract().as(MonitorPostazione.class);
+    public void testOk() {
 
-        monitorPostazione.setAbilitata(false);
+        testWithValue(false);
+    }
+
+    @Test
+    public void testKo() {
+
+        testWithValue(true);
+    }
+
+    private void testWithValue(boolean abilitata) {
+        MonitorPostazione monitorPostazione = given().get("test/persist/"+abilitata).then().extract().as(MonitorPostazione.class);
+
+        monitorPostazione.setAbilitata(!abilitata);
 
         MonitorPostazione monitorPostazioneUpdated = given().body(monitorPostazione).contentType("application/json").get("test/merge").then().extract().as(MonitorPostazione.class);
 
         MonitorPostazione monitorPostazioneGet = given()
-                .body(new MonitorPostazionePK(monitorPostazioneUpdated.getIdBar(), monitorPostazioneUpdated.getIdMonitor(), monitorPostazioneUpdated.getSottoPreparazione()))
+                .body(monitorPostazioneUpdated)
                 .contentType("application/json")
-                .get("test").then().extract().as(MonitorPostazione.class);
+                .get("/test").then().extract().as(MonitorPostazione.class);
 
-        assertEquals(false, monitorPostazioneGet.isAbilitata());
+        assertEquals(!abilitata, monitorPostazioneGet.isAbilitata());
     }
 
 }

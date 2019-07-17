@@ -7,11 +7,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Random;
 
 @Path("/test")
 @ApplicationScoped
@@ -21,15 +19,14 @@ public class TestCaseResource {
     EntityManager em;
 
     @GET
-    @Path("/persist")
+    @Path("/persist/{abilitata}")
     @Produces(MediaType.APPLICATION_JSON)
     @Transactional
-    public MonitorPostazione persist() {
+    public MonitorPostazione persist(@PathParam("abilitata") boolean abilitata) {
         MonitorPostazione monitorPostazione = new MonitorPostazione();
-        monitorPostazione.setIdBar("D-571");
-        monitorPostazione.setIdMonitor(1L);
-        monitorPostazione.setSottoPreparazione("FORNO");
-        monitorPostazione.setAbilitata(true);
+
+        monitorPostazione.setMonitorPostazionePK(new MonitorPostazionePK("D-571", new Random().nextLong(), "FORNO"));
+        monitorPostazione.setAbilitata(abilitata);
 
         em.persist(monitorPostazione);
 
@@ -50,9 +47,9 @@ public class TestCaseResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public MonitorPostazione get(MonitorPostazionePK pk) {
+    public MonitorPostazione get(MonitorPostazione entity) {
 
-        MonitorPostazione rootEntity = em.find(MonitorPostazione.class, pk);
+        MonitorPostazione rootEntity = em.find(MonitorPostazione.class, entity.getMonitorPostazionePK());
         return rootEntity;
     }
 }
