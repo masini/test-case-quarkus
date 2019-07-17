@@ -1,16 +1,17 @@
 package org.acme.quickstart.boundaries;
 
-import org.acme.quickstart.entities.FirstChild;
-import org.acme.quickstart.entities.RootEntity;
-import org.acme.quickstart.entities.SecondChild;
+import org.acme.quickstart.entities.MonitorPostazione;
+import org.acme.quickstart.entities.MonitorPostazionePK;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import java.util.Collections;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 @Path("/test")
 @ApplicationScoped
@@ -20,37 +21,38 @@ public class TestCaseResource {
     EntityManager em;
 
     @GET
-    public void get() {
-        RootEntity updateBL = create();
-        mergeIt(updateBL);
+    @Path("/persist")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Transactional
+    public MonitorPostazione persist() {
+        MonitorPostazione monitorPostazione = new MonitorPostazione();
+        monitorPostazione.setIdBar("D-571");
+        monitorPostazione.setIdMonitor(1L);
+        monitorPostazione.setSottoPreparazione("FORNO");
+        monitorPostazione.setAbilitata(true);
+
+        em.persist(monitorPostazione);
+
+        return monitorPostazione;
     }
 
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public RootEntity create() {
-        SecondChild sc1 = new SecondChild();
-        SecondChild sc2 = new SecondChild();
-
-        FirstChild firstChild = new FirstChild();
-
-        firstChild.getSecondChildren().add(sc2);
-        firstChild.getSecondChildren().add(sc1);
-
-        RootEntity rootEntity = new RootEntity();
-
-        rootEntity.setFirstChildren(Collections.singletonList(firstChild));
-
-        rootEntity.setBarcode("barcode");
-
-        return em.merge(rootEntity);
-    }
-
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public RootEntity mergeIt(RootEntity entity) {
-
-        RootEntity r = em.createQuery("select r from RootEntity r join fetch r.firstChildren fc join fetch fc.secondChildren where r.barcode = :barcode", RootEntity.class).setParameter("barcode", entity.getBarcode()).getSingleResult();
-
-        RootEntity rootEntity = em.merge(entity);
+    @GET
+    @Path("/merge")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    public MonitorPostazione merge(MonitorPostazione entity) {
+        MonitorPostazione rootEntity = em.merge(entity);
         return rootEntity;
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    public MonitorPostazione get(MonitorPostazionePK pk) {
+
+        MonitorPostazione rootEntity = em.find(MonitorPostazione.class, pk);
+        return rootEntity;
+    }
 }
