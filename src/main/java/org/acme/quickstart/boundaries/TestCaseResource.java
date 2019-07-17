@@ -47,6 +47,8 @@ public class TestCaseResource {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public RootEntity mergeIt(RootEntity entity) {
 
+        RootEntity r = em.createQuery("select r from RootEntity r join fetch r.firstChildren fc join fetch fc.secondChildren where r.barcode = :barcode", RootEntity.class).setParameter("barcode", entity.getBarcode()).getSingleResult();
+
         RootEntity rootEntity = em.merge(entity);
         return rootEntity;
     }

@@ -2,7 +2,8 @@ package org.acme.quickstart.entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class FirstChild {
@@ -16,7 +17,7 @@ public class FirstChild {
     long version;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    List<SecondChild> secondChildren = new ArrayList<>();
+    Set<SecondChild> secondChildren = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -26,11 +27,11 @@ public class FirstChild {
         this.id = id;
     }
 
-    public List<SecondChild> getSecondChildren() {
+    public Set<SecondChild> getSecondChildren() {
         return secondChildren;
     }
 
-    public void setSecondChildren(List<SecondChild> secondChildren) {
+    public void setSecondChildren(Set<SecondChild> secondChildren) {
         this.secondChildren = secondChildren;
     }
 
